@@ -3,7 +3,7 @@ USE ecommerce;
 
 CREATE TABLE IF NOT EXISTS utenti(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	nome_utente VARCHAR(40) NOT NULL,
+	nome_utente VARCHAR(40) NOT NULL UNIQUE,
 	pw_hash VARCHAR(255) NOT NULL,
 	privilegi ENUM('0', '1') NOT NULL,
 	data_creazione DATETIME NOT NULL
