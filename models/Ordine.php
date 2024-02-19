@@ -1,5 +1,5 @@
 <?php
-require "./Connessione.php";
+require_once "./Connessione.php";
 class Ordine extends Connessione
 {
     private $conn;

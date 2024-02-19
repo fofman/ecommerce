@@ -1,5 +1,5 @@
 <?php
-require "Connessione.php";
+require_once "Connessione.php";
 class Prodotto extends Connessione
 {
     protected $conn;
@@ -15,6 +15,17 @@ class Prodotto extends Connessione
 
     public function removeProdotto($id)
     {
+    }
+
+    public function getByID($id)
+    {
+        $query = "SELECT * FROM prodotti WHERE id=?";
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute([$id]);
+
+        $ris = $stmt->fetch(PDO::FETCH_OBJ);
+        return $ris;
     }
 
     public function getProdottoByID($id)
@@ -35,7 +46,7 @@ class Prodotto extends Connessione
 
         $stmt->execute([$id]);
 
-        $ris = $stmt->fetch(PDO::FETCH_OBJ);
+        $ris = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $ris;
     }
 
@@ -68,10 +79,18 @@ class Prodotto extends Connessione
 
     public function getProdottiRecenti($lim)
     {
-        $query = "SELECT * FROM prodotti ORDER BY data_aggiunta DESC LIMIT $lim";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        $ris = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $ris;
+        if ($lim == 0) {
+            $query = "SELECT * FROM prodotti WHERE tipologia='prodotto' ORDER BY data_aggiunta DESC";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $ris = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $ris;
+        } else {
+            $query = "SELECT * FROM prodotti ORDER BY data_aggiunta DESC LIMIT $lim";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $ris = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $ris;
+        }
     }
 }

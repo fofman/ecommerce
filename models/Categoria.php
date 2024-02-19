@@ -1,5 +1,5 @@
 <?php
-require "./Connessione.php";
+require_once "./Connessione.php";
 class Categoria extends Connessione
 {
     private $conn;
