@@ -21,10 +21,22 @@ class Carrello extends Connessione
         }
     }
 
+    public function getByID($id)
+    {
+        try {
+            $query = "SELECT * FROM carrelli WHERE id=?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([$id]);
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public function getOggettiByUtente($id)
     {
         $query = <<<SQL
-        SELECT carrelli.id,carrelli.quantitativo,carrelli.id_prodotto,carrelli.id_utente,prodotti.id_prodotto AS ref 
+        SELECT carrelli.id,carrelli.quantitativo,carrelli.id_prodotto,carrelli.id_utente,prodotti.prezzo,prodotti.id_prodotto AS ref 
         FROM carrelli
         INNER JOIN prodotti
         ON carrelli.id_prodotto=prodotti.id
@@ -37,7 +49,8 @@ class Carrello extends Connessione
         return $ris;
     }
 
-    public function getCosto($id){
+    public function getCosto($id)
+    {
         $query = <<<SQL
         SELECT SUM(prodotti.prezzo*quantitativo) AS totale
         FROM carrelli 
@@ -49,6 +62,19 @@ class Carrello extends Connessione
         $stmt->execute([$id]);
 
         $ris = $stmt->fetch(PDO::FETCH_OBJ);
+        if($ris->totale==null) $ris->totale=0;
         return $ris;
+    }
+
+    public function removeDaCarrello($id)
+    {
+        try {
+            $query = "DELETE FROM carrelli WHERE id=?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([$id]);
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 }

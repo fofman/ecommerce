@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     $p = new Prodotto();
     $c = new Carrello();
-    echo var_dump($_POST);
     if (isset($_POST["accessori"])) {
         $prodotti = array_merge([$_POST["prodotto"]], $_POST["accessori"]);
     } else {
@@ -18,4 +17,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     foreach ($prodotti as $prodotto) {
         echo $c->add($_SESSION["userID"], $prodotto, $_POST["quantitativo"]);
     }
+    header("Location: ../views/carrello.php",true,301);
 }

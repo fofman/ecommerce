@@ -7,7 +7,7 @@ $prodotti = $p->getProdottiRecenti(0);
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
     <meta charset="UTF-8">
@@ -22,7 +22,7 @@ $prodotti = $p->getProdottiRecenti(0);
         <ul class="nav nav-pills lead">
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"><i class="bi bi-house-door-fill"></i></a></li>
             <li class="nav-item"><a href="./views/carrello.php" class="nav-link"><i class="bi bi-cart-fill"></i></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-person-circle"></i></a></li>
+            <li class="nav-item"><a href="./views/profilo.php" class="nav-link"><i class="bi bi-person-circle"></i></a></li>
         </ul>
     </header>
     <main>

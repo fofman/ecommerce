@@ -28,7 +28,7 @@ $carrello = $c->getOggettiByUtente($_SESSION["userID"]);
         <ul class="nav nav-pills lead">
             <li class="nav-item"><a href="../index.php" class="nav-link"><i class="bi bi-house-door-fill"></i></a></li>
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"><i class="bi bi-cart-fill"></i></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-person-circle"></i></a></li>
+            <li class="nav-item"><a href="./profilo.php" class="nav-link"><i class="bi bi-person-circle"></i></a></li>
         </ul>
     </header>
     <main>
@@ -40,25 +40,28 @@ $carrello = $c->getOggettiByUtente($_SESSION["userID"]);
                 <div class="card-body">
                     <h4>Totale: <?php echo $c->getCosto($_SESSION["userID"])->totale ?> €</h4>
                     <br>
-                    <button type="button" class="btn btn-primary">Conferma ordine</button>
+                    <a href="../controllers/checkout.php" class="btn btn-primary">Conferma ordine</a>
                 </div>
             </div>
         </div>
         <div class="container mt-5 row mx-auto">
             <?php foreach ($carrello as $item) {
                 $prodotto=$p->getByID($item->id_prodotto);
+                $prezzo=$prodotto->prezzo*$item->quantitativo;
                 echo <<<HTML
             <div class="col-lg-3 col-md-5 mb-4 d-flex align-items-stretch flex-md-fill flex-lg-grow-0">
                 <div class="card overflow-hidden flex-fill">
                     <img src="https://via.placeholder.com/300" class="card-img-top" alt="Furniture 1">
                     <div class="card-body">
                         <h5 class="card-title">$prodotto->titolo</h5>
-                        <p class="card-text">$prodotto->prezzo €</p>
+                        <div class="card-text">Prezzo: $prezzo €</div>
+                        <div class="card-text">Unità: $item->quantitativo</div>
+                        <br>
                         <div class="row">
-                            <a class="col btn btn-primary m-1">
+                            <a href="../views/prodotto.php?prodotto=$prodotto->id" class="col btn btn-primary m-1">
                                 <i class="bi bi-arrow-90deg-left"></i>
                             </a>
-                            <a href="" data-method="delete" class="col btn btn-danger m-1">
+                            <a href="../controllers/rimuoviDaCarrello.php?item=$item->id" data-method="delete" class="col btn btn-danger m-1">
                                 <i class="bi bi-trash-fill"></i>
                             </a>
                         </div>

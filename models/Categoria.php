@@ -2,7 +2,7 @@
 require_once "./Connessione.php";
 class Categoria extends Connessione
 {
-    private $conn;
+    protected $conn;
 
     public function __construct()
     {

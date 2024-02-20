@@ -43,7 +43,7 @@ $formAccessori = join("\n", $formAccessori);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title><?php echo $prodotto->titolo ?></title>
     <?php include_once "./components/dipendenze.php"; ?>
     <link rel="stylesheet" href="../public/static/prodotto/style.css">
 </head>
@@ -53,7 +53,7 @@ $formAccessori = join("\n", $formAccessori);
         <ul class="nav nav-pills lead">
             <li class="nav-item"><a href="../index.php" class="nav-link" aria-current="page"><i class="bi bi-house-door-fill"></i></a></li>
             <li class="nav-item"><a href="./carrello.php" class="nav-link"><i class="bi bi-cart-fill"></i></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-person-circle"></i></a></li>
+            <li class="nav-item"><a href="./profilo.php" class="nav-link"><i class="bi bi-person-circle"></i></a></li>
         </ul>
     </header>
     <br>

@@ -26,18 +26,15 @@ CREATE TABLE IF NOT EXISTS `carrelli` (
   `id_prodotto` int(10) unsigned NOT NULL,
   `id_utente` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella ecommerce.carrelli: ~5 rows (circa)
-DELETE FROM `carrelli`;
-INSERT INTO `carrelli` (`id`, `quantitativo`, `id_prodotto`, `id_utente`) VALUES
-	(1, 1, 1, 1),
-	(2, 1, 1, 1),
-	(3, 1, 1, 1),
+REPLACE INTO `carrelli` (`id`, `quantitativo`, `id_prodotto`, `id_utente`) VALUES
 	(4, 1, 11, 2),
-	(5, 1, 12, 1),
-	(6, 6, 2, 1),
-	(7, 1, 1, 1);
+	(11, 2, 2, 1),
+	(12, 3, 1, 1),
+	(13, 3, 11, 1),
+	(14, 3, 12, 1);
 
 -- Dump della struttura di tabella ecommerce.categorie
 CREATE TABLE IF NOT EXISTS `categorie` (
@@ -48,8 +45,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella ecommerce.categorie: ~9 rows (circa)
-DELETE FROM `categorie`;
-INSERT INTO `categorie` (`id`, `titolo`, `descrizione`) VALUES
+REPLACE INTO `categorie` (`id`, `titolo`, `descrizione`) VALUES
 	(1, 'Mobili da cucina', 'Mobili per la cucina, come armadietti e cassetti'),
 	(2, 'Mobili da soggiorno', 'Mobili per il soggiorno, come divani e tavoli'),
 	(3, 'Mobili da camera', 'Mobili per la camera da letto, come letti e comodini'),
@@ -67,8 +63,7 @@ CREATE TABLE IF NOT EXISTS `categorie_prodotti` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella ecommerce.categorie_prodotti: ~10 rows (circa)
-DELETE FROM `categorie_prodotti`;
-INSERT INTO `categorie_prodotti` (`id_prodotto`, `id_categoria`) VALUES
+REPLACE INTO `categorie_prodotti` (`id_prodotto`, `id_categoria`) VALUES
 	(1, 1),
 	(2, 1),
 	(3, 2),
@@ -85,14 +80,17 @@ CREATE TABLE IF NOT EXISTS `dettagli_ordini` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_ordine` int(10) unsigned NOT NULL,
   `id_prodotto` int(10) unsigned NOT NULL,
-  `costo` decimal(10,2) NOT NULL,
+  `prezzo` decimal(10,2) NOT NULL,
   `quantitativo` int(10) unsigned NOT NULL,
-  `data_ordine` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce.dettagli_ordini: ~0 rows (circa)
-DELETE FROM `dettagli_ordini`;
+-- Dump dei dati della tabella ecommerce.dettagli_ordini: ~4 rows (circa)
+REPLACE INTO `dettagli_ordini` (`id`, `id_ordine`, `id_prodotto`, `prezzo`, `quantitativo`) VALUES
+	(5, 0, 2, 299.99, 2),
+	(6, 0, 1, 499.99, 3),
+	(7, 0, 11, 22.00, 3),
+	(8, 0, 12, 2.00, 3);
 
 -- Dump della struttura di tabella ecommerce.immagini
 CREATE TABLE IF NOT EXISTS `immagini` (
@@ -103,7 +101,6 @@ CREATE TABLE IF NOT EXISTS `immagini` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella ecommerce.immagini: ~0 rows (circa)
-DELETE FROM `immagini`;
 
 -- Dump della struttura di tabella ecommerce.indirizzi
 CREATE TABLE IF NOT EXISTS `indirizzi` (
@@ -114,19 +111,20 @@ CREATE TABLE IF NOT EXISTS `indirizzi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella ecommerce.indirizzi: ~0 rows (circa)
-DELETE FROM `indirizzi`;
 
 -- Dump della struttura di tabella ecommerce.ordini
 CREATE TABLE IF NOT EXISTS `ordini` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_utente` int(10) unsigned NOT NULL,
   `costo_totale` decimal(10,2) NOT NULL,
-  `quantitativo` int(11) NOT NULL,
+  `data_ordine` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce.ordini: ~0 rows (circa)
-DELETE FROM `ordini`;
+-- Dump dei dati della tabella ecommerce.ordini: ~2 rows (circa)
+REPLACE INTO `ordini` (`id`, `id_utente`, `costo_totale`, `data_ordine`) VALUES
+	(5, 1, 2171.95, '2024-02-20 21:44:37'),
+	(6, 6, 1.00, '2024-02-20 21:47:35');
 
 -- Dump della struttura di tabella ecommerce.prodotti
 CREATE TABLE IF NOT EXISTS `prodotti` (
@@ -141,9 +139,8 @@ CREATE TABLE IF NOT EXISTS `prodotti` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce.prodotti: ~10 rows (circa)
-DELETE FROM `prodotti`;
-INSERT INTO `prodotti` (`id`, `titolo`, `descrizione`, `tipologia`, `prezzo`, `data_aggiunta`, `id_creatore`, `id_prodotto`) VALUES
+-- Dump dei dati della tabella ecommerce.prodotti: ~12 rows (circa)
+REPLACE INTO `prodotti` (`id`, `titolo`, `descrizione`, `tipologia`, `prezzo`, `data_aggiunta`, `id_creatore`, `id_prodotto`) VALUES
 	(1, 'Armadio da cucina', 'Armadio per riporre utensili da cucina', 'prodotto', 499.99, '2024-02-15 17:00:38', 2, NULL),
 	(2, 'Tavolo da pranzo', 'Tavolo in legno massiccio per la sala da pranzo', 'prodotto', 299.99, '2024-02-15 17:00:38', 2, NULL),
 	(3, 'Divano in pelle', 'Divano a tre posti in pelle nera', 'prodotto', 799.99, '2024-02-15 17:00:38', 2, NULL),
@@ -169,8 +166,7 @@ CREATE TABLE IF NOT EXISTS `utenti` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella ecommerce.utenti: ~3 rows (circa)
-DELETE FROM `utenti`;
-INSERT INTO `utenti` (`id`, `nome_utente`, `pw_hash`, `privilegi`, `data_creazione`) VALUES
+REPLACE INTO `utenti` (`id`, `nome_utente`, `pw_hash`, `privilegi`, `data_creazione`) VALUES
 	(1, 'Daniel', '$2y$10$P8Qkhc/3CdRJ2GDYKo7Pt.7SA3jrtsa3SomfipWYQw06OHCbwY9mi', 'visualizzatore', '2024-02-02 21:28:02'),
 	(2, 'DanielH', '$2y$10$qK6zdxi.jYUod/RDFkaVK.xUimV90SaBIvXrwme1dqJTFptsCMHZW', 'visualizzatore', '2024-02-02 21:28:40'),
 	(3, 'Utente3', '$2y$10$fcDC.GIqnvolg.hSkP7Hv.UMTiSeEWc3ls9VWkFjdVOa71jqLyx6a', 'visualizzatore', '2024-02-02 21:39:59');
